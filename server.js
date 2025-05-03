@@ -3,8 +3,8 @@ const { parse } = require('url');
 const next = require('next');
 
 const dev = process.env.NODE_ENV !== 'production';
-const hostname = 'localhost';
-const port = process.env.PORT || 8080; // Railway sets PORT env variable
+const hostname = process.env.NODE_ENV === 'production' ? '0.0.0.0' : 'localhost';
+const port = process.env.PORT || 3000; // Railway sets PORT env variable
 const app = next({ dev, hostname, port });
 const handle = app.getRequestHandler();
 
@@ -23,7 +23,7 @@ app.prepare().then(() => {
       console.error(err);
       process.exit(1);
     })
-    .listen(port, () => {
+    .listen(port, hostname, () => {
       console.log(`> Ready on http://${hostname}:${port}`);
     });
 });

@@ -23,12 +23,11 @@ const nextConfig = {
   },
   output: 'standalone',
   poweredByHeader: false,
-  staticPageGenerationTimeout: 120,
-  // Configure the standalone server to use the correct port
-  experimental: {
-    outputStandalone: true
-  }
+  staticPageGenerationTimeout: 120
 }
 
 module.exports = nextConfig
+
+
+
 
