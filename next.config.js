@@ -14,11 +14,23 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'reelbucket1.s3.ap-south-1.amazonaws.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.pexels.com',
       }
     ],
   },
+  // Optimized for Vercel deployment
+  output: 'standalone',
+  poweredByHeader: false,
+  // Increase static generation concurrency for faster builds
+  staticPageGenerationTimeout: 120,
 }
 
 module.exports = nextConfig
+
+
+
 
 
