@@ -24,12 +24,11 @@ const nextConfig = {
   output: 'standalone',
   poweredByHeader: false,
   staticPageGenerationTimeout: 120,
-  // Make sure there are NO redirects here
+  // Configure the standalone server to use the correct port
+  experimental: {
+    outputStandalone: true
+  }
 }
 
 module.exports = nextConfig
-
-
-
-
 
