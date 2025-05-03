@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ["nodejs_18", "nodejs_18.pkgs.npm"]
+aptPkgs = ["nodejs", "npm"]
 
 [phases.install]
 cmds = ["npm ci"]
