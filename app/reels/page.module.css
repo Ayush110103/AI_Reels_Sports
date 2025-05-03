@@ -1,0 +1,21 @@
+.reelsPage {
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000;
+}
+
+/* Remove all width restrictions */
+@media (min-width: 768px) {
+  .reelsPage {
+    max-width: 414px; /* iPhone 12 Pro Max width */
+    margin: 0 auto;
+    border-left: 1px solid #333;
+    border-right: 1px solid #333;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+  }
+}
+
+
+
+
+

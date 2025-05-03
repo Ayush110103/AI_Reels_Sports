@@ -1,0 +1,78 @@
+.controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(0deg, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0) 100%);
+  z-index: 10;
+}
+
+.playButton, .muteButton, .likeButton {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.2s;
+  margin: 0 5px;
+}
+
+.playButton:hover, .muteButton:hover, .likeButton:hover {
+  transform: scale(1.1);
+}
+
+.likeButton {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.likeCount {
+  color: white;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.liked svg path {
+  fill: #FF4081;
+}
+
+/* Add Instagram-like progress bar */
+.progressBar {
+  position: absolute;
+  bottom: 60px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.progress {
+  height: 100%;
+  background-color: white;
+  transition: width 0.1s linear;
+}
+
+@media (max-width: 768px) {
+  .controls {
+    padding: 0.8rem;
+  }
+  
+  .playButton, .muteButton, .likeButton {
+    width: 36px;
+    height: 36px;
+  }
+  
+  .likeCount {
+    font-size: 0.8rem;
+  }
+}
+
