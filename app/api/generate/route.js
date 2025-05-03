@@ -5,13 +5,17 @@ import { s3Client, pollyClient } from '../../../lib/aws';
 import { generateVideo } from '../../../lib/videoGenerator';
 import { generateScript } from '../../../lib/gemini';
 
-// Initialize OpenAI client
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+// Initialize OpenAI client conditionally to avoid build errors
+const openai = process.env.OPENAI_API_KEY 
+  ? new OpenAI({ apiKey: process.env.OPENAI_API_KEY })
+  : null;
 
 // Fallback function to generate audio using OpenAI TTS if Polly fails
 async function generateAudioWithOpenAI(text) {
+  if (!openai) {
+    throw new Error('OpenAI client not initialized - API key missing');
+  }
+  
   console.log('Falling back to OpenAI TTS...');
   const mp3Response = await openai.audio.speech.create({
     model: "tts-1",
@@ -24,6 +28,23 @@ async function generateAudioWithOpenAI(text) {
 }
 
 export async function POST(request) {
+  // Check for required environment variables
+  const missingVars = [];
+  if (!process.env.OPENAI_API_KEY) missingVars.push('OPENAI_API_KEY');
+  if (!process.env.AWS_ACCESS_KEY_ID) missingVars.push('AWS_ACCESS_KEY_ID');
+  if (!process.env.AWS_SECRET_ACCESS_KEY) missingVars.push('AWS_SECRET_ACCESS_KEY');
+  if (!process.env.AWS_REGION) missingVars.push('AWS_REGION');
+  if (!process.env.AWS_S3_BUCKET_NAME) missingVars.push('AWS_S3_BUCKET_NAME');
+  
+  if (missingVars.length > 0) {
+    console.error(`Missing required environment variables: ${missingVars.join(', ')}`);
+    return Response.json({ 
+      error: 'Server configuration error', 
+      message: 'The server is missing required configuration. Please contact the administrator.',
+      details: `Missing: ${missingVars.join(', ')}`
+    }, { status: 500 });
+  }
+
   try {
     // Log environment variables (without exposing full keys)
     console.log('Environment check:');
@@ -33,7 +54,6 @@ export async function POST(request) {
     console.log('- AWS_SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY ? '✓ Set' : '✗ Missing');
     console.log('- AWS_REGION:', process.env.AWS_REGION || '✗ Missing');
     console.log('- AWS_S3_BUCKET_NAME:', process.env.AWS_S3_BUCKET_NAME || '✗ Missing');
-    console.log('- SERPAPI_KEY:', process.env.SERPAPI_KEY ? '✓ Set' : '✗ Missing');
     
     // Parse request body
     let celebrityName;
@@ -150,11 +170,13 @@ export async function POST(request) {
     console.error('Unhandled error in generate API:', error);
     return Response.json({ 
       error: 'Failed to generate video', 
-      details: error.message,
-      stack: error.stack
+      details: error.message || 'Unknown error',
+      stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
     }, { status: 500 });
   }
 }
+
+
 
 
 

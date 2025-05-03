@@ -23,10 +23,15 @@ const nextConfig = {
   },
   output: 'standalone',
   poweredByHeader: false,
-  staticPageGenerationTimeout: 120
+  staticPageGenerationTimeout: 120,
+  // Add environment variables that should be available at build time
+  env: {
+    VERCEL_ENV: process.env.VERCEL_ENV || 'development',
+  }
 }
 
 module.exports = nextConfig
+
 
 
 

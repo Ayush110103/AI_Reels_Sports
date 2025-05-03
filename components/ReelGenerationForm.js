@@ -30,15 +30,17 @@ export default function ReelGenerationForm() {
         body: JSON.stringify({ celebrityName }),
       });
       
+      const data = await response.json();
+      
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Failed to generate reel');
+        throw new Error(data.message || data.error || 'Failed to generate reel');
       }
       
       setSuccess(true);
       setCelebrityName('');
       
     } catch (err) {
+      console.error('Error generating reel:', err);
       setError(err.message || 'Something went wrong. Please try again.');
     } finally {
       setLoading(false);
@@ -121,6 +123,7 @@ export default function ReelGenerationForm() {
     </div>
   );
 }
+
 
 
 
