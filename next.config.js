@@ -21,22 +21,15 @@ const nextConfig = {
       }
     ],
   },
-  // Optimized for Vercel deployment
   output: 'standalone',
   poweredByHeader: false,
-  // Increase static generation concurrency for faster builds
   staticPageGenerationTimeout: 120,
-  // Add redirects to handle potential 404s
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/reels',
-        permanent: true,
-      },
-    ];
-  },
+  // Make sure there are NO redirects here
 }
 
 module.exports = nextConfig
+
+
+
+
 

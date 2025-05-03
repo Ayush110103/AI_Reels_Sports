@@ -13,6 +13,7 @@ export const metadata = {
 }
 
 export default function RootLayout({ children }) {
+  // MAKE SURE THERE'S NO REDIRECT LOGIC HERE
   return (
     <html lang="en" className={inter.variable}>
       <head>
@@ -25,4 +26,5 @@ export default function RootLayout({ children }) {
     </html>
   )
 }
+
 
