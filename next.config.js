@@ -26,11 +26,17 @@ const nextConfig = {
   poweredByHeader: false,
   // Increase static generation concurrency for faster builds
   staticPageGenerationTimeout: 120,
+  // Add redirects to handle potential 404s
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/reels',
+        permanent: true,
+      },
+    ];
+  },
 }
 
 module.exports = nextConfig
-
-
-
-
 
